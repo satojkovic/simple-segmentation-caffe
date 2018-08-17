@@ -87,9 +87,11 @@ int main(int argc, char *argv[])
         << ", " << output_layer->height() << ", " << output_layer->width() << std::endl;
 
     cv::Mat merged_output_image = cv::Mat(output_layer->height(), output_layer->width(), 
-                                            CV_32F, const_cast<float *>(output_layer->mutable_cpu_data()));
+                                            CV_32F, const_cast<float *>(output_layer->cpu_data()));
     merged_output_image.convertTo(merged_output_image, CV_8U);
-    cv::imshow("TEST", merged_output_image);
+    cv::Mat output_image;
+    cv::applyColorMap(merged_output_image, output_image, cv::COLORMAP_RAINBOW);
+    cv::imshow("TEST", output_image);
     cv::waitKey(0);
 
     return 0;
